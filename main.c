@@ -10,6 +10,27 @@ typedef struct		s_env
 }			t_env;
 
 
+void	test(t_env *e)
+{
+	int	i;
+	int	j;
+	int	test;
+
+	*((unsigned char *)&test + 1) = 0xFF;
+	i = 0;
+	while (i < 50)
+	{
+		j = 0;
+		while (j < 50)
+		{
+			mlx_pixel_put(e->ptr, e->win, 250 + i, 250 + j, test);
+			j++;
+		}
+		i++;
+	}
+}
+
+
 int	main(void)
 {
 	t_env	*e;
@@ -17,6 +38,9 @@ int	main(void)
 	char	*get_data_addr;
 	int	*img_data;
 	int	i;
+	unsigned char	b = 0;
+	unsigned char	g = 1;
+	unsigned char 	r = 2;
 
 	e = (t_env *)malloc(sizeof(t_env));
 	e->ptr = mlx_init();
@@ -30,13 +54,14 @@ int	main(void)
 	i = 0;
 	while (i < 300 * 50)
 	{
-		get_data_addr[i] = 0xFF;
-		i++;
+		get_data_addr[i + b] = 0xFF;
+		get_data_addr[i + g] = 0x00;
+		get_data_addr[i + r] = 0xFF;
+		i += 4;
 	}	
-	mlx_pixel_put(e->ptr, e->win, 19, 20, 0xFF0000);
 	mlx_put_image_to_window(e->ptr, e->win, img, 20, 20);
 	mlx_put_image_to_window(e->ptr, e->win, img, 188, 150);
 	mlx_put_image_to_window(e->ptr, e->win, img, 400, 300);
-	mlx_destroy_image(e->ptr, img);
+	test(e);
 	mlx_loop(e->ptr);
 }
