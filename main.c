@@ -49,7 +49,7 @@ int	main(void)
 	img_data = (int *)malloc(sizeof(int) * 3);
 	get_data_addr = mlx_get_data_addr(img, img_data, img_data + 1, img_data + 2);
 	
-	printf("bits_per_pixel = %d\nbits_per_line = %d\nendian = %d\n", img_data[0], img_data[1], img_data[2]);
+	printf("bits_per_pixel = %d\nbytes_per_line = %d\nendian = %d\n", img_data[0], img_data[1], img_data[2]);
 
 	i = 0;
 	while (i < 300 * 50)
